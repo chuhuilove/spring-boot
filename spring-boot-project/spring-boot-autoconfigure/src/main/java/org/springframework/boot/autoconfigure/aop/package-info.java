@@ -16,5 +16,6 @@
 
 /**
  * Auto-configuration for Spring AOP.
+ * Spring AOP自动配置
  */
 package org.springframework.boot.autoconfigure.aop;

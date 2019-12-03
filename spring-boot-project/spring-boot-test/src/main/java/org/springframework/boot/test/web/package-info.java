@@ -15,6 +15,6 @@
  */
 
 /**
- * Web test utilities and support classes.
+ * Web测试工具和支持类.
  */
 package org.springframework.boot.test.web;

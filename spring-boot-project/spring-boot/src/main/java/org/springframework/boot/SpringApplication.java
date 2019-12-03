@@ -83,13 +83,11 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.support.StandardServletEnvironment;
 
 /**
- * Class that can be used to bootstrap and launch a Spring application from a Java main
- * method. By default class will perform the following steps to bootstrap your
- * application:
+ * 可用于从Java main方法引导和启动Spring应用程序的类.
+ * 默认情况下,本类将执行以下步骤来引导您的应用程序:
  *
  * <ul>
- * <li>Create an appropriate {@link ApplicationContext} instance (depending on your
- * classpath)</li>
+ * <li>创建一个适当的{@link ApplicationContext}实例(依赖你自己的路径)</li>
  * <li>Register a {@link CommandLinePropertySource} to expose command line arguments as
  * Spring properties</li>
  * <li>Refresh the application context, loading all singleton beans</li>
@@ -209,7 +207,9 @@ public class SpringApplication {
 	private boolean addConversionService = true;
 
 	private Banner banner;
-
+	/**
+	 * 顾名思义,这是一个资源加载器
+	 */
 	private ResourceLoader resourceLoader;
 
 	private BeanNameGenerator beanNameGenerator;
@@ -264,6 +264,7 @@ public class SpringApplication {
 	public SpringApplication(ResourceLoader resourceLoader, Class<?>... primarySources) {
 		this.resourceLoader = resourceLoader;
 		Assert.notNull(primarySources, "PrimarySources must not be null");
+		// 加载的主类资源
 		this.primarySources = new LinkedHashSet<>(Arrays.asList(primarySources));
 		this.webApplicationType = WebApplicationType.deduceFromClasspath();
 		setInitializers((Collection) getSpringFactoriesInstances(ApplicationContextInitializer.class));
@@ -287,12 +288,13 @@ public class SpringApplication {
 	}
 
 	/**
-	 * Run the Spring application, creating and refreshing a new
-	 * {@link ApplicationContext}.
+	 * 运行Spring应用,创建并且刷新新的{@link ApplicationContext}.
+	 * 这个函数是整个Spring boot启动的核心,相当于spring framework中的那个
 	 * @param args the application arguments (usually passed from a Java main method)
 	 * @return a running {@link ApplicationContext}
 	 */
 	public ConfigurableApplicationContext run(String... args) {
+
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 		ConfigurableApplicationContext context = null;

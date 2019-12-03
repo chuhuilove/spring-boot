@@ -15,7 +15,7 @@
  */
 
 /**
- * Spring Boot's auto-configuration capabilities.
+ * Spring Boot的自动配置功能
  *
  * @see org.springframework.boot.autoconfigure.EnableAutoConfiguration
  */

@@ -15,6 +15,6 @@
  */
 
 /**
- * Spring Boot developer tools.
+ * Spring Boot 开发者工具
  */
 package org.springframework.boot.devtools;

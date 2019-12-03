@@ -33,6 +33,7 @@ public interface Banner {
 
 	/**
 	 * Print the banner to the specified print stream.
+	 * 打印banner到指定的输出流上
 	 * @param environment the spring environment
 	 * @param sourceClass the source class for the application
 	 * @param out the output print stream
