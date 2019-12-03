@@ -289,7 +289,8 @@ public class SpringApplication {
 
 	/**
 	 * 运行Spring应用,创建并且刷新新的{@link ApplicationContext}.
-	 * 这个函数是整个Spring boot启动的核心,相当于spring framework中的那个
+	 * 这个函数是整个Spring boot启动的核心,
+	 * 相当于spring framework中的{@link AbstractApplicationContext#refresh()}函数
 	 * @param args the application arguments (usually passed from a Java main method)
 	 * @return a running {@link ApplicationContext}
 	 */
