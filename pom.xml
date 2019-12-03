@@ -28,6 +28,7 @@
 				<nohttp-checkstyle.version>0.0.3.RELEASE</nohttp-checkstyle.version>
 			</properties>
 			<build>
+				<!--
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -103,6 +104,7 @@
 						</executions>
 					</plugin>
 				</plugins>
+				-->
 			</build>
 			<modules>
 				<module>spring-boot-project</module>
