@@ -42,6 +42,7 @@ import org.springframework.beans.factory.support.BeanNameGenerator;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.boot.Banner.Mode;
+import org.springframework.boot.context.ConfigurationWarningsApplicationContextInitializer;
 import org.springframework.boot.context.properties.bind.Bindable;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.boot.context.properties.source.ConfigurationPropertySources;
@@ -160,6 +161,7 @@ public class SpringApplication {
 	/**
 	 * The class name of application context that will be used by default for non-web
 	 * environments.
+	 *
 	 */
 	public static final String DEFAULT_CONTEXT_CLASS = "org.springframework.context."
 			+ "annotation.AnnotationConfigApplicationContext";
@@ -266,6 +268,7 @@ public class SpringApplication {
 		Assert.notNull(primarySources, "PrimarySources must not be null");
 		// 加载的主类资源
 		this.primarySources = new LinkedHashSet<>(Arrays.asList(primarySources));
+		// 判断应用类型,一般情况下,返回WebApplicationType.SERVLET
 		this.webApplicationType = WebApplicationType.deduceFromClasspath();
 		setInitializers((Collection) getSpringFactoriesInstances(ApplicationContextInitializer.class));
 		setListeners((Collection) getSpringFactoriesInstances(ApplicationListener.class));
@@ -308,11 +311,23 @@ public class SpringApplication {
 			ConfigurableEnvironment environment = prepareEnvironment(listeners, applicationArguments);
 			configureIgnoreBeanInfo(environment);
 			Banner printedBanner = printBanner(environment);
+			/**
+			 * 在web情况下,context是一个
+			 * {@link org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext}
+			 * 实例
+			 */
 			context = createApplicationContext();
 			exceptionReporters = getSpringFactoriesInstances(SpringBootExceptionReporter.class,
 					new Class[] { ConfigurableApplicationContext.class }, context);
+			/**
+			 * 预刷新上下文,在里面有一个load方法,用来加载bean定义.
+			 */
 			prepareContext(context, environment, listeners, applicationArguments, printedBanner);
+			/**
+			 * 刷新上下文,实例化bean,实际上调用的还是{@value AbstractApplicationContext#refresh()}方法.
+			 */
 			refreshContext(context);
+			// 没有实现
 			afterRefresh(context, applicationArguments);
 			stopWatch.stop();
 			if (this.logStartupInfo) {
@@ -365,28 +380,68 @@ public class SpringApplication {
 
 	private void prepareContext(ConfigurableApplicationContext context, ConfigurableEnvironment environment,
 			SpringApplicationRunListeners listeners, ApplicationArguments applicationArguments, Banner printedBanner) {
+
+		/**
+		 * 1. 向context中设置当前上下文环境
+		 */
 		context.setEnvironment(environment);
+
+		/**
+		 * 2. 向context设置三个东西
+		 * beanNameGenerator 注册进context的bean工厂,这是一个beanName生成器.在
+		 * resourceLoader 设置context的资源加载器
+		 * addConversionService 设置context的bean工厂的转换服务,这个转换服务,暂时还没有搞明白是什么意思.
+		 */
 		postProcessApplicationContext(context);
+
+		/**
+		 * 3. 执行当前context中所有的initializer
+		 */
 		applyInitializers(context);
+		/**
+		 * 4. 启动监听器
+		 */
 		listeners.contextPrepared(context);
 		if (this.logStartupInfo) {
 			logStartupInfo(context.getParent() == null);
 			logStartupProfileInfo(context);
 		}
-		// Add boot specific singleton beans
+		/**
+		 * 6. 添加spring-boot指定的单例bean
+		 */
 		ConfigurableListableBeanFactory beanFactory = context.getBeanFactory();
+		/**
+		 * 6.1 将应用的参数添加到bean工厂中,{@link ApplicationArguments}
+		 */
 		beanFactory.registerSingleton("springApplicationArguments", applicationArguments);
+
+		/**
+		 * 6.2 将banner添加到bean工厂中,{@link Banner}
+		 */
 		if (printedBanner != null) {
 			beanFactory.registerSingleton("springBootBanner", printedBanner);
 		}
+		/**
+		 * 6.3 设置是否允许bean之间的覆盖.在{@link DefaultListableBeanFactory}中有一个属性,
+		 * {@value DefaultListableBeanFactory#allowBeanDefinitionOverriding},
+		 * 这个属性在动态注册bean的时候特别有用.
+		 */
 		if (beanFactory instanceof DefaultListableBeanFactory) {
 			((DefaultListableBeanFactory) beanFactory)
 					.setAllowBeanDefinitionOverriding(this.allowBeanDefinitionOverriding);
 		}
+		/**
+		 * 7. 加载bean,扫描我们自定义的bean
+		 * 如,加了@RestController,@Serviced注解的类等等
+		 */
 		// Load the sources
 		Set<Object> sources = getAllSources();
 		Assert.notEmpty(sources, "Sources must not be empty");
 		load(context, sources.toArray(new Object[0]));
+		/**
+		 * 8. 调用监听器...
+		 * //todo 暂时不去考虑监听器那玩意
+		 */
 		listeners.contextLoaded(context);
 	}
 
@@ -413,13 +468,19 @@ public class SpringApplication {
 				getSpringFactoriesInstances(SpringApplicationRunListener.class, types, this, args));
 	}
 
+	/**
+	 * 通过给定的类型,获取其实现的子类
+	 * @param type
+	 * @param <T>
+	 * @return
+	 */
 	private <T> Collection<T> getSpringFactoriesInstances(Class<T> type) {
 		return getSpringFactoriesInstances(type, new Class<?>[] {});
 	}
 
 	private <T> Collection<T> getSpringFactoriesInstances(Class<T> type, Class<?>[] parameterTypes, Object... args) {
 		ClassLoader classLoader = getClassLoader();
-		// Use names and ensure unique to protect against duplicates
+		//使用名称并确保惟一以防止重复
 		Set<String> names = new LinkedHashSet<>(SpringFactoriesLoader.loadFactoryNames(type, classLoader));
 		List<T> instances = createSpringFactoriesInstances(type, parameterTypes, classLoader, args, names);
 		AnnotationAwareOrderComparator.sort(instances);
@@ -594,6 +655,7 @@ public class SpringApplication {
 	 * @param context the application context
 	 */
 	protected void postProcessApplicationContext(ConfigurableApplicationContext context) {
+		// 向工厂中注册一个单例
 		if (this.beanNameGenerator != null) {
 			context.getBeanFactory().registerSingleton(AnnotationConfigUtils.CONFIGURATION_BEAN_NAME_GENERATOR,
 					this.beanNameGenerator);
@@ -619,6 +681,11 @@ public class SpringApplication {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected void applyInitializers(ConfigurableApplicationContext context) {
+		/**
+		 * 默认情况下,有6个initializer
+		 * @see #setInitializers(Collection)
+		 */
+
 		for (ApplicationContextInitializer initializer : getInitializers()) {
 			Class<?> requiredType = GenericTypeResolver.resolveTypeArgument(initializer.getClass(),
 					ApplicationContextInitializer.class);
@@ -714,6 +781,8 @@ public class SpringApplication {
 	}
 
 	/**
+	 * 从context获取bean定义注册器.
+	 *
 	 * Get the bean definition registry.
 	 * @param context the application context
 	 * @return the BeanDefinitionRegistry if it can be determined
@@ -729,7 +798,8 @@ public class SpringApplication {
 	}
 
 	/**
-	 * Factory method used to create the {@link BeanDefinitionLoader}.
+	 * 创建{@link BeanDefinitionLoader}的工厂方法.
+	 *
 	 * @param registry the bean definition registry
 	 * @param sources the sources to load
 	 * @return the {@link BeanDefinitionLoader} that will be used to load beans
@@ -1135,6 +1205,7 @@ public class SpringApplication {
 	 * @param applicationContextClass the context class to set
 	 */
 	public void setApplicationContextClass(Class<? extends ConfigurableApplicationContext> applicationContextClass) {
+
 		this.applicationContextClass = applicationContextClass;
 		this.webApplicationType = WebApplicationType.deduceFromApplicationContext(applicationContextClass);
 	}
@@ -1145,6 +1216,43 @@ public class SpringApplication {
 	 * @param initializers the initializers to set
 	 */
 	public void setInitializers(Collection<? extends ApplicationContextInitializer<?>> initializers) {
+
+		/**
+		 * 当这个函数被{@link #SpringApplication(ResourceLoader, Class[])}调用的时候,
+		 * 会产生6个initializer,这个六个initializer是由Spring Framework的内部工厂加载机制来实现的
+		 * ,更准确的说,是由{@link SpringFactoriesLoader#loadFactoryNames(Class, ClassLoader)}来实现的.
+		 *
+		 * 读取的分别是位于两个不同目录下,文件名都是spring-factories的文件中定义的.
+		 *
+		 * \spring-boot-project\spring-boot-autoconfigure\src\main\resources\META-INF\
+		 *  1. {@link org.springframework.boot.autoconfigure.SharedMetadataReaderFactoryContextInitializer}
+		 *
+		 *  在{@code initialize}方法里面,添加了一个BeanFactoryPostProcessor,
+		 *  具体实例为{@link org.springframework.boot.autoconfigure.SharedMetadataReaderFactoryContextInitializer.CachingMetadataReaderFactoryPostProcessor}
+		 *  没整清楚这个BeanFactoryProcessor是做什么的.
+		 *
+		 * 	2. {@link org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener}
+		 *
+		 * 	在{@code initialize}方法里面,添加了一个ApplicationListener
+		 * 	{@link org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener.ConditionEvaluationReportListener}
+		 * 	也没整清楚,是干啥用的.
+		 *
+		 * \spring-boot-project\spring-boot\src\main\resources\META-INF\
+		 * 	3. {@link org.springframework.boot.context.config.DelegatingApplicationContextInitializer}
+		 * 	获取从context的getEnvironment()获取initializer,然后分别执行.
+		 *
+		 * 	4. {@link org.springframework.boot.context.ContextIdApplicationContextInitializer}
+		 * 		在{@code initialize}方法里面,添加了一个为context设置了一个id,并且将Context添加到了beanFactory里面
+		 *
+		 * 	5. {@link org.springframework.boot.context.ConfigurationWarningsApplicationContextInitializer}
+		 * 	在{@code initialize}方法里面,添加了一个BeanFactoryPostProcessor,
+		 * 	具体实例为{@link ConfigurationWarningsApplicationContextInitializer.ConfigurationWarningsPostProcessor}
+		 *
+		 *
+		 * 	6. {@link org.springframework.boot.web.context.ServerPortInfoApplicationContextInitializer}
+		 * 	在{@code initialize}方法里面,添加了一个ApplicationListener,自己就是一个监听器.
+		 */
+
 		this.initializers = new ArrayList<>();
 		this.initializers.addAll(initializers);
 	}

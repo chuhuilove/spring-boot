@@ -34,6 +34,11 @@ import org.springframework.core.ResolvableType;
 import org.springframework.util.Assert;
 
 /**
+ *
+ * 将{@link ConditionEvaluationReport}写入日志的{@link ApplicationContextInitializer}.
+ * Reports are logged at the {@link LogLevel#DEBUG DEBUG} level.
+ * 崩溃报告会触发信息输出,建议用户在启用调试的情况下再次运行以显示报告.
+ *
  * {@link ApplicationContextInitializer} that writes the {@link ConditionEvaluationReport}
  * to the log. Reports are logged at the {@link LogLevel#DEBUG DEBUG} level. A crash
  * report triggers an info output suggesting the user runs again with debug enabled to
@@ -79,6 +84,10 @@ public class ConditionEvaluationReportLoggingListener
 
 	@Override
 	public void initialize(ConfigurableApplicationContext applicationContext) {
+		/**
+		 * 向context中添加一个{@link ConditionEvaluationReportListener}监听器
+		 *
+	 */
 		this.applicationContext = applicationContext;
 		applicationContext.addApplicationListener(new ConditionEvaluationReportListener());
 		if (applicationContext instanceof GenericApplicationContext) {

@@ -53,6 +53,9 @@ class SharedMetadataReaderFactoryContextInitializer
 
 	@Override
 	public void initialize(ConfigurableApplicationContext applicationContext) {
+		/**
+		 * 向context中添加一个beanFactory后置处理器
+		 */
 		applicationContext.addBeanFactoryPostProcessor(new CachingMetadataReaderFactoryPostProcessor());
 	}
 
@@ -72,6 +75,7 @@ class SharedMetadataReaderFactoryContextInitializer
 		@Override
 		public int getOrder() {
 			// Must happen before the ConfigurationClassPostProcessor is created
+			// 将级别设置的最低
 			return Ordered.HIGHEST_PRECEDENCE;
 		}
 

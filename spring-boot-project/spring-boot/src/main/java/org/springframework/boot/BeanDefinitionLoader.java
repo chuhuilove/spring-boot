@@ -78,12 +78,24 @@ class BeanDefinitionLoader {
 		Assert.notNull(registry, "Registry must not be null");
 		Assert.notEmpty(sources, "Sources must not be empty");
 		this.sources = sources;
+		/**
+		 * 初始化基于注解的bd读取器
+		 */
 		this.annotatedReader = new AnnotatedBeanDefinitionReader(registry);
+		/**
+		 * 初始化基于xml的bd读取器
+		 */
 		this.xmlReader = new XmlBeanDefinitionReader(registry);
 		if (isGroovyPresent()) {
 			this.groovyReader = new GroovyBeanDefinitionReader(registry);
 		}
+		/**
+		 * 创建db读取器
+		 */
 		this.scanner = new ClassPathBeanDefinitionScanner(registry);
+		/**
+		 * 排除过滤器
+		 */
 		this.scanner.addExcludeFilter(new ClassExcludeFilter(sources));
 	}
 
@@ -272,7 +284,28 @@ class BeanDefinitionLoader {
 		return Package.getPackage(source.toString());
 	}
 
+	/**
+	 * @param type
+	 *
+	 * @return
+	 */
 	private boolean isComponent(Class<?> type) {
+
+		/**
+		 * 判断给定类型上是否有{@code @Component}注解
+		 * 这也就是为什么要在
+		 * public class ServerApplication{
+		 * 	public static void main(String[]args){
+		 * 		new SpringApplication(ServerApplication.class).run(args);
+		 * 	 }
+		 * }
+		 * 类上添加一个@SpringBootApplication注解的原因.
+		 * {@code @SpringBootApplication}注解上有一个{@code @SpringBootConfiguration}注解
+		 * 而{@code @SpringBootConfiguration}注解上有一个{@code @Configuration}注解
+		 * 而{@code @Configuration}注解上有一个{@code @Component}注解.
+		 *
+		 */
+
 		// This has to be a bit of a guess. The only way to be sure that this type is
 		// eligible is to make a bean definition out of it and try to instantiate it.
 		if (AnnotationUtils.findAnnotation(type, Component.class) != null) {

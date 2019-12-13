@@ -51,6 +51,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 class ServletWebServerFactoryConfiguration {
 
+	public ServletWebServerFactoryConfiguration(){
+
+	}
+
 	@Configuration
 	@ConditionalOnClass({ Servlet.class, Tomcat.class, UpgradeProtocol.class })
 	@ConditionalOnMissingBean(value = ServletWebServerFactory.class, search = SearchStrategy.CURRENT)
@@ -58,6 +62,9 @@ class ServletWebServerFactoryConfiguration {
 
 		@Bean
 		public TomcatServletWebServerFactory tomcatServletWebServerFactory() {
+
+			System.err.println(Thread.currentThread().getName()+" create invoke tomcatServletWebServerFactory Constructor");
+
 			return new TomcatServletWebServerFactory();
 		}
 
