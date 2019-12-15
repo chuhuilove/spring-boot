@@ -270,6 +270,7 @@ public class SpringApplication {
 		this.primarySources = new LinkedHashSet<>(Arrays.asList(primarySources));
 		// 判断应用类型,一般情况下,返回WebApplicationType.SERVLET
 		this.webApplicationType = WebApplicationType.deduceFromClasspath();
+		// 初始化initializer
 		setInitializers((Collection) getSpringFactoriesInstances(ApplicationContextInitializer.class));
 		setListeners((Collection) getSpringFactoriesInstances(ApplicationListener.class));
 		this.mainApplicationClass = deduceMainApplicationClass();
@@ -314,6 +315,7 @@ public class SpringApplication {
 			/**
 			 * 在web情况下,context是一个
 			 * {@link org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext}
+			 * org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext
 			 * 实例
 			 */
 			context = createApplicationContext();
@@ -737,6 +739,7 @@ public class SpringApplication {
 	}
 
 	/**
+	 * 将当前应用中bean,加载到context中.
 	 * Load beans into the application context.
 	 * @param context the context to load beans into
 	 * @param sources the sources to load

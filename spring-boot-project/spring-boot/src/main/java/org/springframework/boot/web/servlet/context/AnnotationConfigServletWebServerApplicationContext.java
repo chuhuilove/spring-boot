@@ -34,6 +34,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.context.support.GenericWebApplicationContext;
 
 /**
  * {@link ServletWebServerApplicationContext} that accepts annotated classes as input - in
@@ -71,6 +72,23 @@ public class AnnotationConfigServletWebServerApplicationContext extends ServletW
 	 * {@linkplain #refresh refreshed}.
 	 */
 	public AnnotationConfigServletWebServerApplicationContext() {
+		/**
+		 * 这个类的无参构造函数,其内部的实现和{@link org.springframework.context.annotation.AnnotationConfigApplicationContext}的无参构造函数内部实现几乎一样
+		 * 这个类内部的继承层次
+		 * 1. DefaultResourceLoader
+		 * 2. AbstractApplicationContext
+		 * 3. GenericApplicationContext
+		 * 4. {@link GenericWebApplicationContext} 无参构造函数,内部什么都没做
+		 * 5. {@link ServletWebServerApplicationContext} 无参构造函数,内部什么都没做
+		 * 6. AnnotationConfigServletWebServerApplicationContext
+		 *
+		 * 实现了{@link #postProcessBeanFactory}方法,
+		 *
+		 *
+		 *
+		 */
+
+
 		this.reader = new AnnotatedBeanDefinitionReader(this);
 		this.scanner = new ClassPathBeanDefinitionScanner(this);
 	}
@@ -199,7 +217,13 @@ public class AnnotationConfigServletWebServerApplicationContext extends ServletW
 
 	@Override
 	protected void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
+		/**
+		 * 调用父类的postProcessBeanFactory()
+		 * 其父类是:{@link ServletWebServerApplicationContext#postProcessBeanFactory(ConfigurableListableBeanFactory)}
+		 *
+		 */
 		super.postProcessBeanFactory(beanFactory);
+		// 后置处理器bean工厂中扫描包
 		if (this.basePackages != null && this.basePackages.length > 0) {
 			this.scanner.scan(this.basePackages);
 		}
