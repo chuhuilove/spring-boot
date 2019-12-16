@@ -2,11 +2,11 @@ package com.chuhui.springbootdebug;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * BootstrapApplication
  * <p>
- * //TODO description
  *
  * @author: 纯阳子
  * @date: 2019/12/14
@@ -15,7 +15,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BootstrapApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BootstrapApplication.class, args);
+		SpringApplication app = new SpringApplication(BootstrapApplication.class);
+		app.addInitializers();
+		app.run(args);
 	}
 
 }

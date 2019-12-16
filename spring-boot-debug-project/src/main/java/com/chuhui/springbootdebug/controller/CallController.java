@@ -26,14 +26,10 @@ public class CallController {
 	@Autowired
 	private ChuHuiDemoAInterfaces demoAService;
 
-	@Autowired
-	private ServletContextAware contextAware;
-
 
 	@GetMapping("callDemoAService")
 	public void callDemoAService(){
 		demoAService.invokeDemoAService();
-		System.err.println(contextAware.hashCode());
 	}
 
 	@GetMapping("callDemoBService")

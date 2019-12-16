@@ -48,6 +48,7 @@ import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.boot.context.properties.source.ConfigurationPropertySources;
 import org.springframework.boot.convert.ApplicationConversionService;
 import org.springframework.boot.web.reactive.context.StandardReactiveWebEnvironment;
+import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ApplicationListener;
@@ -817,6 +818,22 @@ public class SpringApplication {
 	 */
 	protected void refresh(ApplicationContext applicationContext) {
 		Assert.isInstanceOf(AbstractApplicationContext.class, applicationContext);
+		/**
+		 * 当前context若是AnnotationConfigServletWebServerApplicationContext类,则
+		 * 调用过程会是:
+		 * 1. {@link ServletWebServerApplicationContext#refresh()}
+		 * 2. {@link AbstractApplicationContext#refresh()}
+		 *
+		 * 在refresh中,会调用一个函数{@link AbstractApplicationContext#postProcessBeanFactory(ConfigurableListableBeanFactory)}
+		 * 这个函数的调用过程如下:
+		 * 1. {@link org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext#postProcessBeanFactory(ConfigurableListableBeanFactory)}
+		 * 2. {@link ServletWebServerApplicationContext#postProcessBeanFactory(ConfigurableListableBeanFactory)}
+		 * 3.
+		 *
+		 *
+		 *
+		 */
+
 		((AbstractApplicationContext) applicationContext).refresh();
 	}
 
