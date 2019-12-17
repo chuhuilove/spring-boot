@@ -16,7 +16,8 @@ public class BootstrapApplication {
 
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(BootstrapApplication.class);
-		app.addInitializers();
+
+		app.addInitializers(new CustomApplicationContextInitializer());
 		app.run(args);
 	}
 

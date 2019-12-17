@@ -104,6 +104,7 @@ import org.springframework.util.StringUtils;
  */
 public class ConfigFileApplicationListener implements EnvironmentPostProcessor, SmartApplicationListener, Ordered {
 
+//	org.springframework.boot.context.config.ConfigFileApplicationListener$PropertySourceOrderingPostProcessor
 	private static final String DEFAULT_PROPERTIES = "defaultProperties";
 
 	// Note the order is from least to most specific (last one wins)

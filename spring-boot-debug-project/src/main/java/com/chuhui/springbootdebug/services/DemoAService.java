@@ -19,9 +19,10 @@ public class DemoAService implements ChuHuiDemoAInterfaces {
 	@Autowired
 	private ChuHuiDemoBInterfaces demoBService;
 
+	@Override
 	public void invokeDemoAService() {
 		System.err.println("in invokeDemoAService invoke DemoBService");
 		System.err.println("invokeDemoAService ");
-		System.err.println("demoBService:"+demoBService.hashCode());
+		System.err.println("demoBService:" + demoBService.hashCode());
 	}
 }

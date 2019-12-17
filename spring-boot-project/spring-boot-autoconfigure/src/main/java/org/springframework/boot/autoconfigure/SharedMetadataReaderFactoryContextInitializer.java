@@ -92,7 +92,6 @@ class SharedMetadataReaderFactoryContextInitializer
 		private void register(BeanDefinitionRegistry registry) {
 			/**
 			 * 注册一个org.springframework.boot.autoconfigure.internalCachingMetadataReaderFactory
-			 *
 			 */
 			BeanDefinition definition = BeanDefinitionBuilder
 					.genericBeanDefinition(SharedMetadataReaderFactoryBean.class, SharedMetadataReaderFactoryBean::new)
