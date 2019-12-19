@@ -2,6 +2,7 @@ package com.chuhui.springbootdebug.config;
 
 import com.chuhui.springbootdebug.custome.CustomClassSecond;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -15,6 +16,7 @@ import org.springframework.core.annotation.Order;
  */
 @Configuration
 @Order(Ordered.LOWEST_PRECEDENCE-3)
+@ComponentScan("com.chuhui.springbootdebug")
 public class AppConfigSecond {
 
 	@Bean

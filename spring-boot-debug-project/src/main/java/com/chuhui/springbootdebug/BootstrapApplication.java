@@ -1,8 +1,9 @@
 package com.chuhui.springbootdebug;
 
-import org.springframework.boot.SpringApplication;
+import com.chuhui.springbootdebug.config.AppConfigMain;
+import com.chuhui.springbootdebug.config.AppConfigSecond;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  * BootstrapApplication
@@ -15,10 +16,16 @@ import org.springframework.context.annotation.Configuration;
 public class BootstrapApplication {
 
 	public static void main(String[] args) {
-		SpringApplication app = new SpringApplication(BootstrapApplication.class);
 
-		app.addInitializers(new CustomApplicationContextInitializer());
-		app.run(args);
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+		context.register(AppConfigSecond.class, AppConfigMain.class);
+		context.refresh();
+
+
+//		SpringApplication app = new SpringApplication(BootstrapApplication.class);
+//
+//		app.addInitializers(new CustomApplicationContextInitializer());
+//		app.run(args);
 	}
 
 }
