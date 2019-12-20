@@ -15,7 +15,7 @@ import org.springframework.core.annotation.Order;
  * @Description:TODO
  */
 @Configuration
-@Order(Ordered.LOWEST_PRECEDENCE-3)
+@Order(Ordered.LOWEST_PRECEDENCE-1)
 @ComponentScan("com.chuhui.springbootdebug")
 public class AppConfigSecond {
 

@@ -7,7 +7,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 /**
  * BootstrapApplication
- * <p>
  *
  * @author: 纯阳子
  * @date: 2019/12/14
@@ -23,7 +22,6 @@ public class BootstrapApplication {
 
 
 //		SpringApplication app = new SpringApplication(BootstrapApplication.class);
-//
 //		app.addInitializers(new CustomApplicationContextInitializer());
 //		app.run(args);
 	}

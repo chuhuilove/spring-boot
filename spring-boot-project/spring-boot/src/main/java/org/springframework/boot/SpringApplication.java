@@ -35,6 +35,7 @@ import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.CachedIntrospectionResults;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.groovy.GroovyBeanDefinitionReader;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -1278,6 +1279,12 @@ public class SpringApplication {
 	}
 
 	/**
+	 * 这个方法,和{@link AbstractApplicationContext#addBeanFactoryPostProcessor(BeanFactoryPostProcessor)}
+	 * 有些相似.可以看在{@link PostProcessorRegistrationDelegate#invokeBeanFactoryPostProcessors(ConfigurableListableBeanFactory, List)}
+	 * 中的文字解析.
+	 * 为什么这么说呢?因为在{@linlk ApplicationContextInitializer}的几个默认实现中,都承载着文字解析中的作用.
+	 * 如:{@link org.springframework.boot.autoconfigure.SharedMetadataReaderFactoryContextInitializer}
+	 *
 	 * Add {@link ApplicationContextInitializer}s to be applied to the Spring
 	 * {@link ApplicationContext}.
 	 * @param initializers the initializers to add
