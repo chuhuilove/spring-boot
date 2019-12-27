@@ -1,5 +1,6 @@
 package com.chuhui.springbootdebug.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -14,12 +15,8 @@ import javax.annotation.PostConstruct;
 @Service
 public class DemoCircularServiceB {
 
+	@Autowired
 	private DemoCircularServiceA serviceA;
-
-	public DemoCircularServiceB(DemoCircularServiceA serviceA) {
-		System.err.println("DemoCircularServiceB Constructor invoke");
-		this.serviceA = serviceA;
-	}
 
 
 	@PostConstruct

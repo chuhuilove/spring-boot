@@ -32,10 +32,13 @@ public class CustomApplicationContextInitializer implements ApplicationContextIn
 		registerPostProcessor((BeanDefinitionRegistry) applicationContext, bDef, "com.chuhui.springbootdebug.bustomBeanPostProcessor");
 
 
+
+
 	}
 
 	private static BeanDefinitionHolder registerPostProcessor(
 			BeanDefinitionRegistry registry, RootBeanDefinition definition, String beanName) {
+
 
 		definition.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
 		registry.registerBeanDefinition(beanName, definition);
