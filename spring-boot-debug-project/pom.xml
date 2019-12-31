@@ -14,6 +14,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<lombok.version>1.18.8</lombok.version>
+		<com.jcraft.jsch.version>0.1.53</com.jcraft.jsch.version>
 	</properties>
 
 	<dependencies>
@@ -22,6 +24,18 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 			<version>${revision}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.jcraft</groupId>
+			<artifactId>jsch</artifactId>
+			<version>${com.jcraft.jsch.version}</version>
+		</dependency>
+
 	</dependencies>
 
 

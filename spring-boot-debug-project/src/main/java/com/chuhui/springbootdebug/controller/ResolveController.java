@@ -34,14 +34,10 @@ public class ResolveController implements FactoryBean<Resolver>, ApplicationCont
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		System.err.println("afterPropertiesSet");
-		System.err.println("afterPropertiesSet");
-		System.err.println("afterPropertiesSet");
 	}
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		this.applicationContext=applicationContext;
-
 	}
 }
