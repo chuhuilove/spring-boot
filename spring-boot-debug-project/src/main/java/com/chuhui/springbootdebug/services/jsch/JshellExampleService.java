@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.LockSupport;
 
 /**
  * JshellExampleService
@@ -88,18 +87,9 @@ public class JshellExampleService {
 			while (flag) {
 				if (executeThread.getState() == State.TIMED_WAITING) {
 
-					if (remoteService.getSb().indexOf("Will compare again after") > 0) {
-
-						// 代表当前陷入了 时间等待中...
-						// 陷入时间等待中,,那么我这边不处理
-						LockSupport.unpark(executeThread);
-					}
 					if (remoteService.getSb().indexOf("will you restore the data[Y/N]") > 0) {
 
-						logger.info("current execute Thread state is:{}", executeThread.getState());
-
 						if (remoteService.getSb().indexOf("Will compare again after") > 0) {
-
 							ChannelShell channel = (ChannelShell) remoteService.getChannel();
 
 							try {
@@ -113,8 +103,14 @@ public class JshellExampleService {
 							}
 						}
 					}
+					// 判断,是否应该退出..
+					if (remoteService.getSb().lastIndexOf(remoteService.getSftpUserName() + "@") > 0) {
+						break;
+					}
 				}
-				logger.info("current execute Thread state is:{}", executeThread.getState());
+				if (executeThread.getState() == State.TERMINATED) {
+					flag = false;
+				}
 
 				try {
 					TimeUnit.MILLISECONDS.sleep(2000L);

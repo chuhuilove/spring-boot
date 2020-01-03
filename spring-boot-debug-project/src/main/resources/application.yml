@@ -3,5 +3,3 @@ server:
   servlet:
     context-path: /debugproject
 
-
-

@@ -3,15 +3,14 @@ package com.chuhui.springbootdebug.services.jsch;
 import com.jcraft.jsch.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Objects;
 import java.util.Properties;
-import java.util.concurrent.locks.LockSupport;
 
 /**
  * RemoteExecuteService
@@ -36,6 +35,9 @@ public class RemoteExecuteService {
 
 	private String executeType;
 
+	public String getSftpUserName() {
+		return sftpUserName;
+	}
 
 	public RemoteExecuteService(String hostip, String sftpUserName, String sftpPassword) {
 		this.sftpHost = hostip;
@@ -195,20 +197,14 @@ public class RemoteExecuteService {
 			while (true) {
 				String line = reader.readLine();
 
-				if (Objects.isNull(line)) {
-					// 如果读到null了,则睡眠
-					logger.warn("read to null,start sleep");
-					LockSupport.park(this);
-				} else {
-					if (!line.contains("source .bash_profile")) {
-						sb.append(line + "\n");
-						String s = sb.toString();
-						if (s.lastIndexOf("cyzidn1@myhost1[/home/cyzidn1]$") > 0) {
-							break;
-						}
-					} else {
-						firstLine = line + "\n";
+				if (!line.contains("source .bash_profile")) {
+					sb.append(line + "\n");
+					String s = sb.toString();
+					if (s.lastIndexOf(sftpUserName+"@") > 0) {
+						break;
 					}
+				} else {
+					firstLine = line;
 				}
 			}
 
@@ -218,7 +214,8 @@ public class RemoteExecuteService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return firstLine + sb.toString();
+		sb.insert(0, firstLine);
+		return sb.toString();
 	}
 
 	public Channel getChannel() {

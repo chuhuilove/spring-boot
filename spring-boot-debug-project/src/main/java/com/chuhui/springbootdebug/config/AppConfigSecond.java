@@ -19,7 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 @Order(Ordered.LOWEST_PRECEDENCE - 1)
-@ComponentScan("com.chuhui.springbootdebug")
+@ComponentScan({"com.chuhui.springbootdebug","com.chuhui.resolver"})
 public class AppConfigSecond implements SchedulingConfigurer, WebMvcConfigurer {
 
 	@Bean

@@ -49,6 +49,8 @@ import org.springframework.util.Assert;
  * A container object which Binds objects from one or more
  * {@link ConfigurationPropertySource ConfigurationPropertySources}.
  *
+ * 绑定来自一个或多个{@link ConfigurationPropertySource ConfigurationPropertySources}的对象的容器对象
+ *
  * @author Phillip Webb
  * @author Madhura Bhave
  * @since 2.0.0

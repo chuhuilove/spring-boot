@@ -5,6 +5,7 @@ import com.chuhui.springbootdebug.interfaces.ChuHuiDemoBInterfaces;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.ServletContextAware;
@@ -31,7 +32,7 @@ public class CallController implements InitializingBean {
 
 
 	@PostConstruct
-	void callControllerInitMethod_PostConstruct(){
+	void callControllerInitMethod_PostConstruct() {
 		/**
 		 * 调用链
 		 * org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory#initializeBean 1800
@@ -44,21 +45,31 @@ public class CallController implements InitializingBean {
 		 * com.chuhui.springbootdebug.controller.CallController#callControllerInitMethod
 		 *
 		 */
-		System.err.println("in callControllerInitMethod demoBService hash code:"+demoBService.hashCode());
-		System.err.println("in callControllerInitMethod demoAService hash code:"+demoAService.hashCode());
+		System.err.println("in callControllerInitMethod demoBService hash code:" + demoBService.hashCode());
+		System.err.println("in callControllerInitMethod demoAService hash code:" + demoAService.hashCode());
 	}
 
 
-
 	@GetMapping("callDemoAService")
-	public void callDemoAService(){
+	public void callDemoAService() {
 		demoAService.invokeDemoAService();
 	}
 
 	@GetMapping("callDemoBService")
-	public void callDemoBService(){
+	public void callDemoBService() {
 		demoBService.invokeDemoBService();
 	}
+
+	@GetMapping("params/{uuid}")
+	public void callDemoBService1(@PathVariable String uuid) {
+		try{
+			throw new  RuntimeException("自定义抛出异常");
+		}catch (RuntimeException e){
+			e.printStackTrace();
+		}
+		System.err.println(uuid);
+	}
+
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
@@ -71,8 +82,8 @@ public class CallController implements InitializingBean {
 		 *
 		 */
 
-		System.err.println("in afterPropertiesSet demoBService hash code:"+demoBService.hashCode());
-		System.err.println("in afterPropertiesSet hash code:"+demoAService.hashCode());
+		System.err.println("in afterPropertiesSet demoBService hash code:" + demoBService.hashCode());
+		System.err.println("in afterPropertiesSet hash code:" + demoAService.hashCode());
 
 	}
 }
