@@ -26,4 +26,9 @@ public class NotRequestMapping {
 		return UUID.randomUUID().toString();
 	}
 
+	@RequestMapping(value = "noRequestMapping",method = {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT})
+	public @ResponseBody String noRequestMapping1( ){
+		return UUID.randomUUID().toString();
+	}
+
 }

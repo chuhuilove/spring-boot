@@ -29,9 +29,8 @@ public class JschShellController {
 
 		model.setDnsName("dn1");
 		model.setNodeDirectoryPath("/home/cyzidn1/QuickMDB");
-		model.setNodeIp("172.16.23.116");
-		model.setNodeXmlPath("/home/cyzidn1/QuMDB/mdbCheck.xml");
-//		model.setNodeXmlPath("/home/cyzidn1/QuickMDB/mdbCheck.xml");
+		model.setNodeIp("127.0.0.1");
+		model.setNodeXmlPath("/home/cyzidn1/dsds/mdbCheck.xml");
 		model.setNodeUserName("cyzidn1");
 		model.setNodeUserPwd("cyzi");
 		JshellExampleService jshellExampleService = new JshellExampleService(model);
