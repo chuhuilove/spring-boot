@@ -6,6 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import static org.springframework.web.servlet.HandlerMapping.PRODUCIBLE_MEDIA_TYPES_ATTRIBUTE;
+
 /**
  * BootstrapApplication
  *
@@ -20,6 +22,7 @@ public class BootstrapApplication {
 //		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
 //		context.register(AppConfigSecond.class, AppConfigMain.class);
 //		context.refresh();
+//
 
 
 		SpringApplication app = new SpringApplication(BootstrapApplication.class);

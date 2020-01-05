@@ -20,7 +20,7 @@ import javax.annotation.PostConstruct;
  * @author: 纯阳子
  * @date: 2019/12/14
  */
-@RestController
+@RestController("callControllerCyzi")
 @RequestMapping("call")
 public class CallController implements InitializingBean {
 

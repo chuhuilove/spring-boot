@@ -53,6 +53,10 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 class WebMvcEndpointChildContextConfiguration {
 
+	public WebMvcEndpointChildContextConfiguration(){
+		System.err.println("cyzi---->Test");
+	}
+
 	/*
 	 * The error controller is present but not mapped as an endpoint in this context
 	 * because of the DispatcherServlet having had its HandlerMapping explicitly disabled.
