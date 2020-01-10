@@ -29,8 +29,8 @@ import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 
 /**
- * Base of all {@link Condition} implementations used with Spring Boot. Provides sensible
- * logging to help the user diagnose what classes are loaded.
+ * Spring Boot中使用的所有{@link Condition}实现的基础.
+ * 提供合理的日志记录,帮助用户诊断加载了哪些类
  *
  * @author Phillip Webb
  * @author Greg Turnquist

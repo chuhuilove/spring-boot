@@ -60,6 +60,7 @@ public class ConditionalOnBeanTests {
 				.run(this::hasBarBean);
 	}
 
+
 	@Test
 	public void testNameAndTypeOnBeanCondition() {
 		this.contextRunner.withUserConfiguration(FooConfiguration.class, OnBeanNameAndTypeConfiguration.class)

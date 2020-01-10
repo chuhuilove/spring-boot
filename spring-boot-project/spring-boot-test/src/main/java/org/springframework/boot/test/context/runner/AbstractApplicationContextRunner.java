@@ -215,8 +215,8 @@ public abstract class AbstractApplicationContextRunner<SELF extends AbstractAppl
 	}
 
 	/**
-	 * Register the specified user configuration classes with the
-	 * {@link ApplicationContext}.
+	 *
+	 * 使用{@link ApplicationContext}注册指定的用户配置类.
 	 * @param configurationClasses the user configuration classes to add
 	 * @return a new instance with the updated configuration
 	 */

@@ -35,6 +35,12 @@
 			<artifactId>jsch</artifactId>
 			<version>${com.jcraft.jsch.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-test</artifactId>
+			<version>${revision}</version>
+			<scope>compile</scope>
+		</dependency>
 
 	</dependencies>
 

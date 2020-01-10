@@ -28,6 +28,8 @@ public class BootstrapApplication {
 		SpringApplication app = new SpringApplication(BootstrapApplication.class);
 		app.addInitializers(new CustomApplicationContextInitializer());
 		app.run(args);
+
+
 	}
 
 }

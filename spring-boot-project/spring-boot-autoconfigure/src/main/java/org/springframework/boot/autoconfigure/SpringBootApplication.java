@@ -34,11 +34,11 @@ import org.springframework.core.annotation.AliasFor;
 import org.springframework.data.repository.Repository;
 
 /**
- * Indicates a {@link Configuration configuration} class that declares one or more
- * {@link Bean @Bean} methods and also triggers {@link EnableAutoConfiguration
- * auto-configuration} and {@link ComponentScan component scanning}. This is a convenience
- * annotation that is equivalent to declaring {@code @Configuration},
- * {@code @EnableAutoConfiguration} and {@code @ComponentScan}.
+ * 将添加此注解的类当成一个{@link Configuration configuration}类,该类声明了一个
+ * 或多个{@link Bean @Bean}方法,并触发{@link EnableAutoConfiguration 自动配置}
+ * 和{@link ComponentScan 组件扫描}.这是一个比较方便的注解,
+ * 添加此注解的类,相当于同时在类上添加{@code @Configuration},{@code @EnableAutoConfiguration}
+ * 和{@code @ComponentScan}三个注解.
  *
  * @author Phillip Webb
  * @author Stephane Nicoll
@@ -50,12 +50,13 @@ import org.springframework.data.repository.Repository;
 @Inherited
 @SpringBootConfiguration
 @EnableAutoConfiguration
-@ComponentScan(excludeFilters = { @Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),
-		@Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) })
+@ComponentScan(excludeFilters = {@Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),
+		@Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class)})
 public @interface SpringBootApplication {
 
 	/**
-	 * Exclude specific auto-configuration classes such that they will never be applied.
+	 * 排除特定的自动配置类,使其永远不会应用
+	 *
 	 * @return the classes to exclude
 	 */
 	@AliasFor(annotation = EnableAutoConfiguration.class)
@@ -64,6 +65,7 @@ public @interface SpringBootApplication {
 	/**
 	 * Exclude specific auto-configuration class names such that they will never be
 	 * applied.
+	 *
 	 * @return the class names to exclude
 	 * @since 1.3.0
 	 */
@@ -79,6 +81,7 @@ public @interface SpringBootApplication {
 	 * scanning or Spring Data {@link Repository} scanning. For those you should add
 	 * {@link org.springframework.boot.autoconfigure.domain.EntityScan @EntityScan} and
 	 * {@code @Enable...Repositories} annotations.
+	 *
 	 * @return base packages to scan
 	 * @since 1.3.0
 	 */
@@ -97,6 +100,7 @@ public @interface SpringBootApplication {
 	 * scanning or Spring Data {@link Repository} scanning. For those you should add
 	 * {@link org.springframework.boot.autoconfigure.domain.EntityScan @EntityScan} and
 	 * {@code @Enable...Repositories} annotations.
+	 *
 	 * @return base packages to scan
 	 * @since 1.3.0
 	 */

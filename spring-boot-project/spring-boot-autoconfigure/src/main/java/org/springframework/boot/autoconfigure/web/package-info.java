@@ -15,6 +15,6 @@
  */
 
 /**
- * Auto-configuration for common web concerns.
+ * 自动配置web的功能点
  */
 package org.springframework.boot.autoconfigure.web;

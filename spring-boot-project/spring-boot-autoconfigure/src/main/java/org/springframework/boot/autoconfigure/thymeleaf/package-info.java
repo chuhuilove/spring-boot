@@ -15,6 +15,6 @@
  */
 
 /**
- * Auto-configuration for Thymeleaf.
+ * 自动配置Thymeleaf.
  */
 package org.springframework.boot.autoconfigure.thymeleaf;

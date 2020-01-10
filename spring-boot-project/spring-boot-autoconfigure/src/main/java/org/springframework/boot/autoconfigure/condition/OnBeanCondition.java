@@ -55,7 +55,8 @@ import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
 /**
- * {@link Condition} that checks for the presence or absence of specific beans.
+ *
+ * 检查特定bean是否存在的{@link Condition}.
  *
  * @author Phillip Webb
  * @author Dave Syer

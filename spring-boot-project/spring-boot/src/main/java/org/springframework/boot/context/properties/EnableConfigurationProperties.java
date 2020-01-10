@@ -26,10 +26,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
 /**
- * Enable support for {@link ConfigurationProperties} annotated beans.
- * {@link ConfigurationProperties} beans can be registered in the standard way (for
- * example using {@link Bean @Bean} methods) or, for convenience, can be specified
- * directly on this annotation.
+ * 启用被{@link ConfigurationProperties}注解的bean的支持.
+ * 可以用标准的方式注册{@link ConfigurationProperties} bean(例如使用{@link Bean @Bean}方法),
+ * 或者,为了方便起见,可以直接在这个注解上指定.
+ * 例如,{@link org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration},
+ * {@code ThymeleafAutoConfiguration}需要自动注入{@link org.springframework.boot.autoconfigure.thymeleaf.ThymeleafProperties}属性类,
+ * 就直接使用了本注解.
+ *
+ * <p>若是自己自定义spring boot的starter,在自动配置的时候,就需要用到这个注解了.
  *
  * @author Dave Syer
  * @since 1.0.0
@@ -43,6 +47,7 @@ public @interface EnableConfigurationProperties {
 	/**
 	 * Convenient way to quickly register {@link ConfigurationProperties} annotated beans
 	 * with Spring. Standard Spring Beans will also be scanned regardless of this value.
+	 *
 	 * @return {@link ConfigurationProperties} annotated beans to register
 	 */
 	Class<?>[] value() default {};

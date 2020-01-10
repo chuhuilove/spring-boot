@@ -25,18 +25,16 @@ import java.lang.annotation.Target;
 import org.springframework.context.annotation.Conditional;
 
 /**
- * {@link Conditional} that only matches when the specified classes are on the classpath.
- * <p>
- * A {@link #value()} can be safely specified on {@code @Configuration} classes as the
- * annotation metadata is parsed by using ASM before the class is loaded. Extra care is
- * required when placed on {@code @Bean} methods, consider isolating the condition in a
- * separate {@code Configuration} class, in particular if the return type of the method
- * matches the {@link #value target of the condition}.
+ * 只在指定类位于类路径上时匹配的{@link Conditional}.
+ * <p>可以在{@code @Configuration}类上安全地指定{@link #value()},
+ * 因为在加载类之前通过使用ASM解析了注解元数据.
+ * 当放在{@code @Bean}方法上时需要额外的注意,考虑将条件隔离在单独的{@code Configuration}类中,
+ * 特别是如果方法的返回类型与{@link #value 条件的目标}相匹配时.
  *
  * @author Phillip Webb
  * @since 1.0.0
  */
-@Target({ ElementType.TYPE, ElementType.METHOD })
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Conditional(OnClassCondition.class)
@@ -48,12 +46,14 @@ public @interface ConditionalOnClass {
 	 * classpath, only if this annotation is directly on the affected component and
 	 * <b>not</b> if this annotation is used as a composed, meta-annotation. In order to
 	 * use this annotation as a meta-annotation, only use the {@link #name} attribute.
+	 *
 	 * @return the classes that must be present
 	 */
 	Class<?>[] value() default {};
 
 	/**
 	 * The classes names that must be present.
+	 *
 	 * @return the class names that must be present.
 	 */
 	String[] name() default {};
