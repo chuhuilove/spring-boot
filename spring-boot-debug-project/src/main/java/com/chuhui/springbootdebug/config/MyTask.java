@@ -14,12 +14,12 @@ import org.springframework.scheduling.annotation.Scheduled;
 public class MyTask {
 	final static private Logger logger = LoggerFactory.getLogger(MyTask.class);
 
-		@Scheduled(initialDelay = 3000,fixedRate = 1000)
+//		@Scheduled(initialDelay = 3000,fixedRate = 1000)
 	public void work() {
 		logger.error("invoke work....");
 	}
 
-		@Scheduled(initialDelay = 5000,fixedDelay = 2000)
+//		@Scheduled(initialDelay = 5000,fixedDelay = 2000)
 	public void work2() {
 		logger.error("invoke work2....");
 	}
