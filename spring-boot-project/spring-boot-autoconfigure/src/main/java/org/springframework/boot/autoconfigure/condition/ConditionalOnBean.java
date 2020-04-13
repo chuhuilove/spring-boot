@@ -27,9 +27,10 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.annotation.Conditional;
 
 /**
+ * 当给定的在bean存在时,则实例化当前Bean.
+ * <p>
  * 只有当满足所有指定要求的bean已经包含在{@link BeanFactory}中时,才匹配该{@link Conditional}.
  * 为了匹配条件,必须满足所有的要求,但是它们不需要由同一个bean来满足.
- *
  * <p>
  * 当放置在{@code @Bean}方法上时,bean类默认为工厂方法的返回类型:
  *
@@ -42,7 +43,6 @@ import org.springframework.context.annotation.Conditional;
  *     public MyService myService() {
  *         ...
  *     }
- *
  * }</pre>
  * <p>
  * 在上面的示例中,如果{@link BeanFactory}中已经包含{@code MyService}类型的Bean,则条件将匹配.

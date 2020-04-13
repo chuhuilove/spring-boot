@@ -2,6 +2,7 @@ package com.chuhui.springbootdebug.controller;
 
 import com.chuhui.springbootdebug.interfaces.ChuHuiDemoAInterfaces;
 import com.chuhui.springbootdebug.interfaces.ChuHuiDemoBInterfaces;
+import com.chuhui.springbootdebug.services.TestAutoService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,13 @@ public class CallController implements InitializingBean {
 	@Autowired
 	private ChuHuiDemoAInterfaces demoAService;
 
+	@Autowired
+	private TestAutoService autoService;
+
+	@GetMapping("/autoTest")
+	public void autoTest() {
+		autoService.message();
+	}
 
 	@PostConstruct
 	void callControllerInitMethod_PostConstruct() {

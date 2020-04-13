@@ -15,6 +15,6 @@
  */
 
 /**
- * {@code @Condition} annotations and supporting classes.
+ * {@code @Condition} 注解和支持类.
  */
 package org.springframework.boot.autoconfigure.condition;

@@ -27,12 +27,17 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.annotation.Conditional;
 
 /**
+ * 当给定的在bean不存在时,则实例化当前Bean.
+ * <p>
+ * 只有当没有满足指定要求的bean已经包含在{@link BeanFactory}中时才匹配的 {@link Conditional}.
+ * 满足条件的任何条件都不必满足,并且同一bean不必满足这些条件.
+ * <p>
  * {@link Conditional} that only matches when no beans meeting the specified requirements
- * are already contained in the {@link BeanFactory}. None of the requirements must be met
+ * are already contained in the {@link BeanFactory}.
+ * None of the requirements must be met
  * for the condition to match and the requirements do not have to be met by the same bean.
  * <p>
- * When placed on a {@code @Bean} method, the bean class defaults to the return type of
- * the factory method:
+ * 当放置在{@code @Bean}方法上时,bean类默认为工厂方法的返回类型:
  *
  * <pre class="code">
  * &#064;Configuration
@@ -46,8 +51,8 @@ import org.springframework.context.annotation.Conditional;
  *
  * }</pre>
  * <p>
- * In the sample above the condition will match if no bean of type {@code MyService} is
- * already contained in the {@link BeanFactory}.
+ * 在上面的示例中,如果{@link BeanFactory}中没有类型为{@code MyService}的bean,则条件将匹配.
+ * 接着,就会将{@code MyService} bean添加到{@link BeanFactory}中.
  * <p>
  * The condition can only match the bean definitions that have been processed by the
  * application context so far and, as such, it is strongly recommended to use this
@@ -58,7 +63,7 @@ import org.springframework.context.annotation.Conditional;
  * @author Andy Wilkinson
  * @since 1.0.0
  */
-@Target({ ElementType.TYPE, ElementType.METHOD })
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Conditional(OnBeanCondition.class)
@@ -67,6 +72,7 @@ public @interface ConditionalOnMissingBean {
 	/**
 	 * The class types of beans that should be checked. The condition matches when no bean
 	 * of each class specified is contained in the {@link BeanFactory}.
+	 *
 	 * @return the class types of beans to check
 	 */
 	Class<?>[] value() default {};
@@ -74,12 +80,14 @@ public @interface ConditionalOnMissingBean {
 	/**
 	 * The class type names of beans that should be checked. The condition matches when no
 	 * bean of each class specified is contained in the {@link BeanFactory}.
+	 *
 	 * @return the class type names of beans to check
 	 */
 	String[] type() default {};
 
 	/**
 	 * The class types of beans that should be ignored when identifying matching beans.
+	 *
 	 * @return the class types of beans to ignore
 	 * @since 1.2.5
 	 */
@@ -88,6 +96,7 @@ public @interface ConditionalOnMissingBean {
 	/**
 	 * The class type names of beans that should be ignored when identifying matching
 	 * beans.
+	 *
 	 * @return the class type names of beans to ignore
 	 * @since 1.2.5
 	 */
@@ -97,6 +106,7 @@ public @interface ConditionalOnMissingBean {
 	 * The annotation type decorating a bean that should be checked. The condition matches
 	 * when each annotation specified is missing from all beans in the
 	 * {@link BeanFactory}.
+	 *
 	 * @return the class-level annotation types to check
 	 */
 	Class<? extends Annotation>[] annotation() default {};
@@ -104,6 +114,7 @@ public @interface ConditionalOnMissingBean {
 	/**
 	 * The names of beans to check. The condition matches when each bean name specified is
 	 * missing in the {@link BeanFactory}.
+	 *
 	 * @return the names of beans to check
 	 */
 	String[] name() default {};
@@ -111,6 +122,7 @@ public @interface ConditionalOnMissingBean {
 	/**
 	 * Strategy to decide if the application context hierarchy (parent contexts) should be
 	 * considered.
+	 *
 	 * @return the search strategy
 	 */
 	SearchStrategy search() default SearchStrategy.ALL;
@@ -120,6 +132,7 @@ public @interface ConditionalOnMissingBean {
 	 * parameters. For example, an annotation declaring {@code value=Name.class} and
 	 * {@code parameterizedContainer=NameRegistration.class} would detect both
 	 * {@code Name} and {@code NameRegistration<Name>}.
+	 *
 	 * @return the container types
 	 * @since 2.1.0
 	 */

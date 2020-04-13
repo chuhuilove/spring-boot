@@ -25,6 +25,8 @@ import java.lang.annotation.Target;
 import org.springframework.context.annotation.Conditional;
 
 /**
+ * 当给定的类名在类路径上存在,则实例化当前Bean.
+ * <p>
  * 只在指定类位于类路径上时匹配的{@link Conditional}.
  * <p>可以在{@code @Configuration}类上安全地指定{@link #value()},
  * 因为在加载类之前通过使用ASM解析了注解元数据.

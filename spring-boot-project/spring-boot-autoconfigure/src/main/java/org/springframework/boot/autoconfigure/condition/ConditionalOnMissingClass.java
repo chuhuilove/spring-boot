@@ -25,13 +25,12 @@ import java.lang.annotation.Target;
 import org.springframework.context.annotation.Conditional;
 
 /**
- * {@link Conditional} that only matches when the specified classes are not on the
- * classpath.
+ * 当给定的类名在类路径上不存在,则实例化当前Bean.
  *
  * @author Dave Syer
  * @since 1.0.0
  */
-@Target({ ElementType.TYPE, ElementType.METHOD })
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Conditional(OnClassCondition.class)
@@ -39,6 +38,7 @@ public @interface ConditionalOnMissingClass {
 
 	/**
 	 * The names of the classes that must not be present.
+	 *
 	 * @return the names of the classes that must not be present
 	 */
 	String[] value() default {};
