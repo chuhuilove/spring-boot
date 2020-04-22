@@ -111,6 +111,8 @@ class OnBeanCondition extends FilteringSpringBootCondition implements Configurat
 
 	@Override
 	public ConditionOutcome getMatchOutcome(ConditionContext context, AnnotatedTypeMetadata metadata) {
+
+
 		ConditionMessage matchMessage = ConditionMessage.empty();
 		// 1. 如果被添加了ConditionalOnBean注解
 		if (metadata.isAnnotated(ConditionalOnBean.class.getName())) {
@@ -409,6 +411,12 @@ class OnBeanCondition extends FilteringSpringBootCondition implements Configurat
 			}
 			//
 			validate(deductionException);
+			if(types.contains("org.springframework.boot.autoconfigure.condition.chuhui.OnMissBeanInterface")){
+				System.err.println("debug");
+				System.err.println("debug");
+				System.err.println("debug");
+			}
+			System.err.println("create BeanSearchSpec:"+toString());
 		}
 
 		protected void validate(BeanTypeDeductionException ex) {
