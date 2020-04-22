@@ -31,8 +31,8 @@ import org.springframework.util.ClassUtils;
 import org.springframework.util.CollectionUtils;
 
 /**
- * Abstract base class for a {@link SpringBootCondition} that also implements
- * {@link AutoConfigurationImportFilter}.
+ *
+ * {@link SpringBootCondition}的抽象基础类,它也实现了{@link AutoConfigurationImportFilter}.
  *
  * @author Phillip Webb
  */
@@ -95,6 +95,9 @@ abstract class FilteringSpringBootCondition extends SpringBootCondition
 		return matches;
 	}
 
+	/**
+	 * 类名过滤....
+	 */
 	protected enum ClassNameFilter {
 
 		PRESENT {

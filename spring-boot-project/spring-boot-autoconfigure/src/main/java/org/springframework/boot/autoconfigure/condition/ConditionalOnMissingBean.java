@@ -122,6 +122,7 @@ public @interface ConditionalOnMissingBean {
 	/**
 	 * Strategy to decide if the application context hierarchy (parent contexts) should be
 	 * considered.
+	 * 搜索策略,默认搜索整个层次结构....
 	 *
 	 * @return the search strategy
 	 */

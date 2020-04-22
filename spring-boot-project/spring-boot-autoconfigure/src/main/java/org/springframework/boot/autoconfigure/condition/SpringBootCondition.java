@@ -29,8 +29,10 @@ import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 
 /**
- * Spring Boot中使用的所有{@link Condition}实现的基础.
- * 提供合理的日志记录,帮助用户诊断加载了哪些类
+ * Spring Boot中使用的所有{@link Condition}实现的基础类.
+ * 提供合理的日志记录,帮助用户判断加载了哪些类.
+ * 这个类,应该是spring boot中最重要的类之一,
+ * 因为这影响到,spring boot的自动配置
  *
  * @author Phillip Webb
  * @author Greg Turnquist
@@ -74,6 +76,11 @@ public abstract class SpringBootCondition implements Condition {
 
 	private static String getClassOrMethodName(AnnotatedTypeMetadata metadata) {
 		if (metadata instanceof ClassMetadata) {
+			// AnnotatedTypeMetadata是一个单独的接口,
+			// ClassMetadata是一个单独的接口,
+			// 只有同时实现了AnnotatedTypeMetadata和ClassMetadata两个接口的类(或者接口)
+			// 才能走到这个地方,比如AnnotationMetadata接口
+
 			ClassMetadata classMetadata = (ClassMetadata) metadata;
 			return classMetadata.getClassName();
 		}

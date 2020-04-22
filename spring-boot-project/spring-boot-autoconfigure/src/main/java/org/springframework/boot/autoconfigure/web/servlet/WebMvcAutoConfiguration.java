@@ -45,6 +45,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication.Type;
+import org.springframework.boot.autoconfigure.condition.chuhui.OnMissBeanInterface;
+import org.springframework.boot.autoconfigure.condition.chuhui.OnMissBeanWindowsService;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration;
 import org.springframework.boot.autoconfigure.template.TemplateAvailabilityProviders;
@@ -125,7 +127,7 @@ import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 /**
- * {@link EnableAutoConfiguration Auto-configuration} for {@link EnableWebMvc Web MVC}.
+ * 	为{@link EnableWebMvc Web MVC}启用{@link EnableAutoConfiguration 自动配置}
  *
  * @author Phillip Webb
  * @author Dave Syer
@@ -152,6 +154,8 @@ public class WebMvcAutoConfiguration {
 	public static final String DEFAULT_SUFFIX = "";
 
 	private static final String[] SERVLET_LOCATIONS = { "/" };
+
+
 
 	@Bean
 	@ConditionalOnMissingBean(HiddenHttpMethodFilter.class)

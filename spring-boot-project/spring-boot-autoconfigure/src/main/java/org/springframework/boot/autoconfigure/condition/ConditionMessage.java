@@ -39,6 +39,10 @@ public final class ConditionMessage {
 
 	private String message;
 
+	/**
+	 * 为什么将构造函数设计成私有的呢?
+	 * //todo 2020年4月22日16:09:26
+	 */
 	private ConditionMessage() {
 		this(null);
 	}

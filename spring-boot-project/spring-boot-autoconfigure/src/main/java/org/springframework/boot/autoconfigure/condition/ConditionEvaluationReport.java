@@ -39,6 +39,7 @@ import org.springframework.util.ObjectUtils;
 
 /**
  * Records condition evaluation details for reporting and logging.
+ * 顾名思义,条件评估报告.
  *
  * @author Greg Turnquist
  * @author Dave Syer
