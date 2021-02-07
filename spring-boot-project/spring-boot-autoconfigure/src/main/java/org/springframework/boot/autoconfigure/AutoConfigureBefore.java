@@ -23,8 +23,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Hint for that an {@link EnableAutoConfiguration auto-configuration} should be applied
- * before other specified auto-configuration classes.
+ * 提示应该在其他指定的自动配置类之前应用{@link EnableAutoConfiguration 自动配置}.
  *
  * @author Phillip Webb
  * @since 1.0.0
@@ -35,13 +34,13 @@ import java.lang.annotation.Target;
 public @interface AutoConfigureBefore {
 
 	/**
-	 * The auto-configure classes that should have not yet been applied.
+	 * 应该还没有应用的自动配置类.
 	 * @return the classes
 	 */
 	Class<?>[] value() default {};
 
 	/**
-	 * The names of the auto-configure classes that should have not yet been applied.
+	 * 应该尚未应用的自动配置类的名称.
 	 * @return the class names
 	 * @since 1.2.2
 	 */

@@ -143,10 +143,12 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @ConditionalOnWebApplication(type = Type.SERVLET)
 @ConditionalOnClass({ Servlet.class, DispatcherServlet.class, WebMvcConfigurer.class })
+/**
+ * 若是缺少 {@link WebMvcConfigurationSupport} Bean,就不会再自动创建{@link WebMvcAutoConfiguration} Bean
+ */
 @ConditionalOnMissingBean(WebMvcConfigurationSupport.class)
 @AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE + 10)
-@AutoConfigureAfter({ DispatcherServletAutoConfiguration.class, TaskExecutionAutoConfiguration.class,
-		ValidationAutoConfiguration.class })
+@AutoConfigureAfter({ DispatcherServletAutoConfiguration.class, TaskExecutionAutoConfiguration.class, ValidationAutoConfiguration.class })
 public class WebMvcAutoConfiguration {
 
 	public static final String DEFAULT_PREFIX = "";
@@ -180,6 +182,7 @@ public class WebMvcAutoConfiguration {
 
 	// Defined as a nested config to ensure WebMvcConfigurer is not read when not
 	// on the classpath
+	// 定义为嵌套配置,以确保不在类路径上时不会读取WebMvcConfigurer
 	@Configuration
 	@Import(EnableWebMvcConfiguration.class)
 	@EnableConfigurationProperties({ WebMvcProperties.class, ResourceProperties.class })
@@ -401,6 +404,7 @@ public class WebMvcAutoConfiguration {
 
 	/**
 	 * Configuration equivalent to {@code @EnableWebMvc}.
+	 * 配置等同于{@code @EnableWebMvc}
 	 */
 	@Configuration
 	public static class EnableWebMvcConfiguration extends DelegatingWebMvcConfiguration implements ResourceLoaderAware {

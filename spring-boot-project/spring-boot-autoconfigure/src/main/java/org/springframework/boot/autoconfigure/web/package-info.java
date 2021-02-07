@@ -16,5 +16,12 @@
 
 /**
  * 自动配置web的功能点
+ * web包中自动配置的类为:
+ * 1. {@link org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration DispatcherServletAutoConfiguration}
+ * 2. {@link org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration ServletWebServerFactoryAutoConfiguration}
+ * 3. {@link org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration ErrorMvcAutoConfiguration}
+ * 4. {@link org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration HttpEncodingAutoConfiguration}
+ * 5. {@link org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration MultipartAutoConfiguration}
+ * 6. {@link org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration WebMvcAutoConfiguration}
  */
 package org.springframework.boot.autoconfigure.web;
